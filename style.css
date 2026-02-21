@@ -1,0 +1,215 @@
+/* SCH Brand Colors */
+:root {
+  --sch-blue: #26549c;
+  --sch-white: #ffffff;
+}
+
+/* Reset reveal defaults */
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  text-transform: none;
+}
+
+.reveal table {
+  margin: 0 auto;
+}
+
+.reveal table th,
+.reveal table td {
+  padding: 0.4em 1.2em;
+}
+
+/* ── Split Title Slide ── */
+.title-slide {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.title-split {
+  width: 1920px;
+  height: 1080px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+
+.title-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: var(--sch-blue);
+}
+
+.title-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: var(--sch-white);
+}
+
+.title-sch {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(50% + 9px);
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 60px;
+  overflow: visible;
+  transform: scale(1.3);
+  transform-origin: bottom center;
+}
+
+.title-text-kr {
+  width: 750px;
+  flex-shrink: 0;
+  overflow: visible;
+  margin-bottom: -2px;
+}
+
+.title-multiply {
+  color: var(--sch-white);
+  font-size: 120px;
+  font-weight: 300;
+  opacity: 0.7;
+}
+
+.title-svg-logo {
+  height: 125px;
+  position: relative;
+  top: 31px;
+}
+
+/* ── Title Slide Subtitle ── */
+.title-subtitle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% + 80px);
+  z-index: 1;
+  text-align: center;
+}
+
+.title-subtitle-main {
+  color: var(--sch-blue);
+  font-family: 'Fira Mono', monospace;
+  font-size: 54px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+}
+
+.title-subtitle-sub {
+  color: var(--sch-blue);
+  font-family: 'Fira Mono', monospace;
+  font-size: 42px;
+  font-weight: 400;
+  opacity: 0.5;
+  margin: 0;
+}
+
+/* ── Content Slide ── */
+.content-slide {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.content-split {
+  width: 1920px;
+  height: 1080px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+
+.content-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 15%;
+  background: var(--sch-blue);
+}
+
+.content-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 85%;
+  background: var(--sch-white);
+}
+
+.content-heading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(85% - 3px);
+  z-index: 1;
+  text-align: left;
+  padding-left: 40px;
+  overflow: visible;
+}
+
+.content-heading svg {
+  width: 500px;
+  overflow: visible;
+}
+
+.content-body {
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  top: 15%;
+  bottom: 0;
+  z-index: 1;
+  color: var(--sch-blue);
+  font-family: 'Fira Mono', monospace;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agenda-grid {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 0;
+}
+
+.agenda-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 300px;
+}
+
+.agenda-icon-lg {
+  width: 100%;
+  height: auto;
+}
+
+.agenda-text {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--sch-blue);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.agenda-num {
+  opacity: 0.35;
+  margin-right: 8px;
+}
