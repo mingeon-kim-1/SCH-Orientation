@@ -307,3 +307,132 @@
   line-height: 1.45;
   text-align: center;
 }
+
+/* ── Ellipsis Dot Animation ── */
+@keyframes ellipsisBounce {
+  0%, 40%, 100% { opacity: 0.2; }
+  20% { opacity: 1; }
+}
+
+.ellipsis-dot {
+  animation: ellipsisBounce 1.5s ease-in-out infinite;
+}
+
+/* ── Dot Glow Animation ── */
+@keyframes dotGlow {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.5; }
+}
+
+.dot-glow {
+  animation: dotGlow 2.4s ease-in-out infinite;
+}
+
+/* ── Pointer Tap Animation ── */
+@keyframes pointerTap {
+  0%, 52%, 100% { transform: rotate(-15deg); }
+  6%, 46% { transform: rotate(0deg); }
+}
+
+@keyframes pointerDotAppear {
+  0%, 4%, 50%, 100% { opacity: 0; }
+  10%, 44% { opacity: 0.45; }
+}
+
+@keyframes pointerGlowAppear {
+  0%, 4%, 50%, 100% { opacity: 0; }
+  10%, 44% { opacity: 0.2; }
+}
+
+.pointer-stick {
+  transform-origin: 100px 152px;
+}
+
+.pointer-dot,
+.pointer-glow {
+  opacity: 0;
+}
+
+section.present .pointer-stick {
+  animation: pointerTap 5s ease-in-out infinite;
+}
+
+section.present .pointer-dot {
+  animation: pointerDotAppear 5s ease-in-out infinite;
+}
+
+section.present .pointer-glow {
+  animation: pointerGlowAppear 5s ease-in-out infinite;
+}
+
+/* ── Molecule Rotation Animation ── */
+@keyframes moleculeOrbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes moleculeSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.molecule-orbit {
+  transform-origin: 100px 105px;
+}
+
+section.present .molecule-orbit {
+  animation: moleculeOrbit 20s linear infinite;
+}
+
+section.present .molecule-spin {
+  animation: moleculeSpin 8s linear infinite;
+}
+
+/* ── Orbit Expand Animation ── */
+@keyframes orbitExpand {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+.orbit-outer,
+.orbit-inner {
+  transform: scale(0);
+  transform-origin: 100px 100px;
+}
+
+section.present .orbit-outer {
+  animation: orbitExpand 0.6s ease-out 0.5s forwards;
+}
+
+section.present .orbit-inner {
+  animation: orbitExpand 0.6s ease-out 0.8s forwards;
+}
+
+/* ── Signal Arc Animation ── */
+@keyframes signalPulse {
+  0% { opacity: 0; transform: scale(0); }
+  15% { opacity: 1; transform: scale(1); }
+  60% { opacity: 1; transform: scale(1); }
+  85% { opacity: 0; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0); }
+}
+
+.signal-arc {
+  opacity: 0;
+  transform: scale(0);
+  transform-origin: 100px 50px;
+}
+
+section.present .signal-arc {
+  animation: signalPulse 2.4s ease-out infinite;
+}
+
+/* ── Sparkle Animation ── */
+@keyframes sparkle {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.3); opacity: 0.3; }
+}
+
+.sparkle {
+  animation: sparkle 1.8s ease-in-out infinite;
+}
