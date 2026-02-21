@@ -738,6 +738,88 @@ section.present .signal-arc {
   width: auto;
 }
 
+/* ── Channel Grid ── */
+.channel-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  width: 100%;
+  padding: 0 40px;
+}
+
+.channel-card {
+  background: #f2f2f7;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 60px 30px;
+}
+
+.channel-icon {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.channel-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.channel-name {
+  font-family: 'Fira Mono', monospace;
+  font-size: 36px;
+  font-weight: 700;
+  color: #333;
+}
+
+.channel-desc {
+  font-family: 'Fira Mono', monospace;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--sch-blue);
+  opacity: 0.5;
+}
+
+/* ── Channel Entrance Animation ── */
+.channel-entrance .content-heading,
+.channel-entrance .channel-card {
+  opacity: 0;
+}
+
+.channel-entrance > .content-split > div[style*="right: 40px"] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+section.channel-entrance.present > .content-split > div[style*="right: 40px"] {
+  visibility: visible;
+  animation: fadeInSoft 0.6s ease-out 0.5s forwards;
+}
+
+section.channel-entrance.present .content-heading {
+  animation: slideInLeft 0.6s ease-out 0.3s forwards;
+}
+
+section.channel-entrance.present .channel-card:nth-child(1) {
+  animation: riseUp 0.6s ease-out 0.5s forwards;
+}
+section.channel-entrance.present .channel-card:nth-child(2) {
+  animation: riseUp 0.6s ease-out 0.7s forwards;
+}
+section.channel-entrance.present .channel-card:nth-child(3) {
+  animation: riseUp 0.6s ease-out 0.9s forwards;
+}
+section.channel-entrance.present .channel-card:nth-child(4) {
+  animation: riseUp 0.6s ease-out 1.1s forwards;
+}
+
 /* ── Bento Entrance Animation ── */
 @keyframes bentoPopIn {
   0% { opacity: 0; transform: scale(0.85); }
