@@ -213,3 +213,97 @@
   opacity: 0.35;
   margin-right: 8px;
 }
+
+/* ── Curriculum Week Grid ── */
+.curriculum-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  width: 100%;
+  height: 75%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.day-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 2px solid #c2d5ed;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 12px rgba(38, 84, 156, 0.06);
+}
+
+.day-card-header {
+  padding: 14px 0 10px;
+  text-align: center;
+}
+
+.day-num {
+  font-size: 15px;
+  font-weight: 400;
+  color: #fff;
+  opacity: 0.7;
+  display: block;
+  margin-bottom: 4px;
+  letter-spacing: 2px;
+}
+
+.day-name {
+  font-size: 34px;
+  font-weight: 700;
+  color: #fff;
+  display: block;
+}
+
+.day-type {
+  text-align: center;
+  padding: 6px 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.day-sessions {
+  padding: 14px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.day-session {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.session-divider {
+  height: 2px;
+  background: #dfe7f2;
+  margin: 12px 0;
+}
+
+.session-label {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sch-blue);
+  opacity: 0.4;
+  margin-bottom: 8px;
+}
+
+.session-items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.session-item {
+  font-size: 21px;
+  color: var(--sch-blue);
+  padding: 4px 0;
+  line-height: 1.45;
+  text-align: center;
+}
