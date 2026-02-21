@@ -685,6 +685,121 @@ section.present .signal-arc {
   animation: signalPulse 2.4s ease-out infinite;
 }
 
+/* ── Bento Grid ── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: repeat(9, 1fr);
+  gap: 16px;
+  width: 100%;
+  height: 90%;
+}
+
+.bento-tile {
+  background: #f2f2f7;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.bento-wrtn { grid-column: 1; grid-row: 1 / 4; }
+.bento-wrtn .bento-logo { filter: brightness(0); }
+.bento-github { grid-column: 1; grid-row: 4 / 7; }
+.bento-github .bento-logo { height: 130px; }
+.bento-gems {
+  grid-column: 1;
+  grid-row: 7 / 10;
+  padding: 0;
+}
+
+.bento-gemini { grid-column: 2 / 4; grid-row: 1 / 4; }
+.bento-gemini .bento-logo { height: 120px; }
+.bento-cursor { grid-column: 2 / 4; grid-row: 4 / 7; background: #000; }
+.bento-cursor .bento-logo-hero { filter: invert(1); }
+.bento-notebooklm { grid-column: 2 / 4; grid-row: 7 / 10; }
+
+.bento-perplexity { grid-column: 4; grid-row: 1 / 5; }
+.bento-n8n { grid-column: 4; grid-row: 5 / 8; }
+.bento-n8n .bento-logo { height: 120px; }
+.bento-more { grid-column: 4; grid-row: 8 / 10; }
+
+
+.bento-logo {
+  height: 90px;
+  width: auto;
+}
+
+.bento-logo-hero {
+  height: 140px;
+  width: auto;
+}
+
+/* ── Bento Entrance Animation ── */
+@keyframes bentoPopIn {
+  0% { opacity: 0; transform: scale(0.85); }
+  60% { opacity: 1; transform: scale(1.02); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.bento-entrance .bento-tile {
+  opacity: 0;
+}
+
+.bento-entrance .content-heading {
+  opacity: 0;
+}
+
+.bento-entrance > .content-split > div[style*="right: 40px"] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+section.bento-entrance.present > .content-split > div[style*="right: 40px"] {
+  visibility: visible;
+  animation: fadeInSoft 0.6s ease-out 0.5s forwards;
+}
+
+section.bento-entrance.present .content-heading {
+  animation: slideInLeft 0.6s ease-out 0.3s forwards;
+}
+
+/* Cursor hero pops in first */
+section.bento-entrance.present .bento-cursor {
+  animation: bentoPopIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s forwards;
+}
+
+/* Inner ring: tiles adjacent to Cursor */
+section.bento-entrance.present .bento-gemini {
+  animation: bentoPopIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.75s forwards;
+}
+section.bento-entrance.present .bento-notebooklm {
+  animation: bentoPopIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.85s forwards;
+}
+section.bento-entrance.present .bento-github {
+  animation: bentoPopIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.95s forwards;
+}
+section.bento-entrance.present .bento-n8n {
+  animation: bentoPopIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 1.05s forwards;
+}
+
+/* Outer ring: corner tiles */
+section.bento-entrance.present .bento-wrtn {
+  animation: bentoPopIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 1.2s forwards;
+}
+section.bento-entrance.present .bento-perplexity {
+  animation: bentoPopIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 1.3s forwards;
+}
+section.bento-entrance.present .bento-gems {
+  animation: bentoPopIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 1.4s forwards;
+}
+section.bento-entrance.present .bento-more {
+  animation: bentoPopIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 1.5s forwards;
+}
+
 /* ── Sparkle Animation ── */
 @keyframes sparkle {
   0%, 100% { transform: scale(1); opacity: 1; }
