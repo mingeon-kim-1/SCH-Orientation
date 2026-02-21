@@ -444,6 +444,7 @@ section.curriculum-entrance.present .day-card:nth-child(5) {
   color: var(--sch-blue);
   opacity: 0.6;
   white-space: nowrap;
+  margin-left: -2px;
 }
 
 .instructor-divider {
