@@ -225,7 +225,132 @@ Text in the white bottom half uses monochrome blue — the same `--sch-blue` at 
 
 ## Content Slides
 
-TBD — will follow the same brand colors and fonts but with a different layout from the title slide.
+Every content slide uses this header layout. The header is fixed; the body varies by content.
+
+### What It Looks Like
+
+```
+┌─────────────────────────────────────────────┐
+│         BLUE (#26549c) — 18%                │
+│  ┌─목차──┐              ┌순천향대 × Wrtn──┐ │
+├──┴───────┴──────────────┴─────────────────┴─┤ ← 18% border
+│                                             │
+│         WHITE (#ffffff) — 82%               │
+│                                             │
+│         (body content varies)               │
+│                                             │
+└─────────────────────────────────────────────┘
+```
+
+### Key Concept
+
+The slide is split at 18% from the top. The top strip is blue, the bottom area is white. The heading text (white SVG) sits at the border line, left-aligned with 40px padding — matching the title slide's "rising from the border" effect. On the right side, a "순천향대학교 × Wrtn" branding element sits at the same border line at ~1/3 the heading size. The body area below is flexible and changes per slide.
+
+### HTML Structure
+
+Every content slide follows this header template:
+
+```html
+<section class="content-slide" data-background="none">
+  <div class="content-split">
+    <div class="content-top"></div>
+    <div class="content-bottom"></div>
+    <div class="content-heading">
+      <svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="120" text-anchor="start"
+              font-family="Fira Mono, monospace" font-weight="700"
+              font-size="120" fill="white">제목</text>
+      </svg>
+    </div>
+    <!-- Branding: 순천향대학교 × Wrtn (right-aligned at border) -->
+    <div style="position: absolute; right: 40px; bottom: calc(82% + 3px); z-index: 1; display: flex; align-items: flex-end; gap: 20px;">
+      <svg viewBox="0 0 900 180" style="width: 250px; flex-shrink: 0; overflow: visible; margin-bottom: -2px;">
+        <text x="450" y="180" text-anchor="middle"
+              font-family="Fira Mono, monospace" font-weight="700"
+              font-size="180" fill="white">순천향대학교</text>
+      </svg>
+      <span style="color: #fff; font-size: 40px; font-weight: 300; opacity: 0.7;">×</span>
+      <img src="assets/Wrtn-white.svg" alt="Wrtn" style="height: 42px; position: relative; top: 25px;">
+    </div>
+    <div class="content-body">
+      <!-- Body content goes here — varies per slide -->
+    </div>
+  </div>
+</section>
+```
+
+### CSS — Header (fixed, do not change)
+
+```css
+.content-slide { padding: 0 !important; margin: 0 !important; }
+
+.content-split {
+  width: 1920px; height: 1080px;
+  position: absolute; top: 0; left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+
+.content-top {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 18%;
+  background: var(--sch-blue);
+}
+
+.content-bottom {
+  position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 82%;
+  background: var(--sch-white);
+}
+
+.content-heading {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: calc(82% - 3px);
+  z-index: 1;
+  text-align: left;
+  padding-left: 40px;
+  overflow: visible;
+}
+
+.content-heading svg { width: 500px; overflow: visible; }
+```
+
+### Heading SVG Rules
+
+- `viewBox="0 0 400 120"` — adjust width to fit text (400 for 2-char, wider for longer)
+- `x="0" y="120"` — left-aligned, baseline at bottom edge
+- `text-anchor="start"`
+- `font-family="Fira Mono, monospace"` `font-weight="700"` `font-size="120"`
+- `fill="white"`
+
+Just change the text content and viewBox width as needed.
+
+### CSS — Body (flexible container)
+
+```css
+.content-body {
+  position: absolute;
+  left: 40px; right: 40px;
+  top: 18%; bottom: 0;
+  z-index: 1;
+  color: var(--sch-blue);
+  font-family: 'Fira Mono', monospace;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+```
+
+The body uses flexbox centering by default. Override or add child layout classes as needed for each slide's content.
+
+### How to Add a New Content Slide
+
+1. Copy the HTML template above
+2. Change the heading text inside `<text>...</text>` and adjust `viewBox` width
+3. Add body content inside `<div class="content-body">`
+4. Do NOT change the header CSS classes or values
 
 ---
 
