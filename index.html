@@ -923,7 +923,7 @@
           </div>
           <div class="title-subtitle icebreak-qr-wrap">
             <img src="assets/slido-qr.svg" alt="Slido QR" class="icebreak-qr">
-            <p class="icebreak-qr-link">app.sli.do/event/vE77NJU8nzrJytm7ezMppG</p>
+            <p class="icebreak-qr-link">sch-orientation.vercel.app/vote.html</p>
           </div>
         </div>
       </section>
@@ -946,7 +946,23 @@
             </div>
           </div>
           <div class="icebreak-right">
-            <iframe src="https://app.sli.do/event/vE77NJU8nzrJytm7ezMppG/embed/polls/live" allow="clipboard-write"></iframe>
+            <div class="poll-results" id="q1-results">
+              <div class="poll-bar">
+                <div class="poll-bar-label">들어본 적 있죠!</div>
+                <div class="poll-bar-track">
+                  <div class="poll-bar-fill" id="q1-bar1"></div>
+                </div>
+                <div class="poll-bar-stat"><span id="q1-pct1">0%</span><span class="poll-bar-count" id="q1-cnt1">0표</span></div>
+              </div>
+              <div class="poll-bar">
+                <div class="poll-bar-label">그게 뭔데요?</div>
+                <div class="poll-bar-track">
+                  <div class="poll-bar-fill" id="q1-bar2"></div>
+                </div>
+                <div class="poll-bar-stat"><span id="q1-pct2">0%</span><span class="poll-bar-count" id="q1-cnt2">0표</span></div>
+              </div>
+              <div class="poll-total">총 <span id="q1-total">0</span>명 참여</div>
+            </div>
           </div>
         </div>
       </section>
@@ -969,13 +985,21 @@
             </div>
           </div>
           <div class="icebreak-right">
-            <iframe src="https://app.sli.do/event/vE77NJU8nzrJytm7ezMppG/embed/polls/live" allow="clipboard-write"></iframe>
+            <div class="poll-results" id="q2-results">
+              <div class="word-cloud" id="q2-cloud"></div>
+              <div class="poll-total">총 <span id="q2-total">0</span>명 참여</div>
+            </div>
           </div>
         </div>
       </section>
 
     </div>
   </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+  <script src="poll-config.js"></script>
 
   <script src="vendor/reveal.js"></script>
   <script src="vendor/highlight.js"></script>
@@ -1021,6 +1045,65 @@
         if (t < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
+    });
+
+    // ── Live Poll Rendering ──
+    firebase.initializeApp(firebaseConfig);
+    var pollDb = firebase.database();
+
+    // Q1: Bar chart
+    pollDb.ref('polls/q1').on('value', function(snap) {
+      var data = snap.val() || {};
+      var values = Object.values(data);
+      var total = values.length;
+      var opt1 = values.filter(function(v) { return v === 'option1'; }).length;
+      var opt2 = total - opt1;
+      var pct1 = total ? Math.round(opt1 / total * 100) : 0;
+      var pct2 = total ? Math.round(opt2 / total * 100) : 0;
+
+      document.getElementById('q1-bar1').style.width = pct1 + '%';
+      document.getElementById('q1-bar2').style.width = pct2 + '%';
+      document.getElementById('q1-pct1').textContent = pct1 + '%';
+      document.getElementById('q1-pct2').textContent = pct2 + '%';
+      document.getElementById('q1-cnt1').textContent = opt1 + '표';
+      document.getElementById('q1-cnt2').textContent = opt2 + '표';
+      document.getElementById('q1-total').textContent = total;
+    });
+
+    // Q2: Word cloud
+    pollDb.ref('polls/q2').on('value', function(snap) {
+      var data = snap.val() || {};
+      var words = Object.values(data);
+      var total = words.length;
+      document.getElementById('q2-total').textContent = total;
+
+      // Count frequency
+      var freq = {};
+      words.forEach(function(w) {
+        var key = w.trim().toLowerCase();
+        if (!key) return;
+        freq[key] = (freq[key] || 0) + 1;
+      });
+
+      // Sort by frequency, take top 50
+      var sorted = Object.entries(freq).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 50);
+      var maxCount = sorted.length ? sorted[0][1] : 1;
+
+      var cloud = document.getElementById('q2-cloud');
+      cloud.innerHTML = '';
+      sorted.forEach(function(entry) {
+        var word = entry[0];
+        var count = entry[1];
+        var span = document.createElement('span');
+        span.className = 'word-cloud-word';
+        span.textContent = word;
+        // Scale font size: min 20px, max 72px
+        var scale = count / maxCount;
+        var fontSize = Math.round(20 + scale * 52);
+        span.style.fontSize = fontSize + 'px';
+        span.style.opacity = 0.5 + scale * 0.5;
+        cloud.appendChild(span);
+      });
     });
   </script>
 </body>

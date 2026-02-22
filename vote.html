@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>ICEBREAKING 투표</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sch-blue: #26549c;
+      --sch-white: #ffffff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f7fa;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      color: var(--sch-blue);
+    }
+
+    .header {
+      background: var(--sch-blue);
+      padding: 24px 20px 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      color: var(--sch-white);
+      font-family: 'Fira Mono', monospace;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .header p {
+      color: var(--sch-white);
+      opacity: 0.6;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    main {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .question-card {
+      background: var(--sch-white);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(38, 84, 156, 0.08);
+    }
+
+    .question-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--sch-blue);
+      opacity: 0.4;
+      margin-bottom: 8px;
+    }
+
+    .question-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--sch-blue);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .question-text img {
+      height: 20px;
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-btn {
+      display: block;
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid var(--sch-blue);
+      border-radius: 12px;
+      background: var(--sch-white);
+      color: var(--sch-blue);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .option-btn:active {
+      transform: scale(0.97);
+    }
+
+    .option-btn:hover {
+      background: var(--sch-blue);
+      color: var(--sch-white);
+    }
+
+    .option-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .option-btn:disabled:hover {
+      background: var(--sch-white);
+      color: var(--sch-blue);
+    }
+
+    .option-btn.selected {
+      background: var(--sch-blue);
+      color: var(--sch-white);
+      opacity: 1;
+    }
+
+    .option-btn.selected:hover {
+      background: var(--sch-blue);
+      color: var(--sch-white);
+    }
+
+    .text-input-wrap {
+      display: flex;
+      gap: 10px;
+    }
+
+    .text-input {
+      flex: 1;
+      padding: 14px 16px;
+      border: 2px solid var(--sch-blue);
+      border-radius: 12px;
+      font-size: 16px;
+      color: var(--sch-blue);
+      background: var(--sch-white);
+      outline: none;
+    }
+
+    .text-input::placeholder {
+      color: var(--sch-blue);
+      opacity: 0.3;
+    }
+
+    .text-input:focus {
+      border-color: var(--sch-blue);
+      box-shadow: 0 0 0 3px rgba(38, 84, 156, 0.15);
+    }
+
+    .submit-btn {
+      padding: 14px 24px;
+      border: none;
+      border-radius: 12px;
+      background: var(--sch-blue);
+      color: var(--sch-white);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.97);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .text-input:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .done-msg {
+      display: none;
+      text-align: center;
+      padding: 14px;
+      background: rgba(38, 84, 156, 0.06);
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--sch-blue);
+    }
+
+    .done-msg.show {
+      display: block;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 12px;
+      color: var(--sch-blue);
+      opacity: 0.3;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>ICEBREAKING</h1>
+    <p>순천향대학교 AI 개발자 양성 집중교육</p>
+  </div>
+
+  <main>
+    <!-- Q1 -->
+    <div class="question-card" id="q1-card">
+      <div class="question-label">Question 1</div>
+      <div class="question-text">나는 <img src="assets/Wrtn.svg" alt="Wrtn">에 대해서 들어본 적이 있다</div>
+      <div class="options" id="q1-options">
+        <button class="option-btn" data-value="option1" onclick="voteQ1(this)">들어본 적 있죠!</button>
+        <button class="option-btn" data-value="option2" onclick="voteQ1(this)">그게 뭔데요?</button>
+      </div>
+      <div class="done-msg" id="q1-done">투표 완료!</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-card" id="q2-card">
+      <div class="question-label">Question 2</div>
+      <div class="question-text">"AI" 하면 처음 떠오르는 단어는?</div>
+      <div class="text-input-wrap" id="q2-form">
+        <input type="text" class="text-input" id="q2-input" placeholder="단어를 입력하세요" maxlength="20">
+        <button class="submit-btn" id="q2-submit" onclick="voteQ2()">전송</button>
+      </div>
+      <div class="done-msg" id="q2-done">투표 완료!</div>
+    </div>
+  </main>
+
+  <div class="footer">순천향대학교 &times; Wrtn</div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+  <script src="poll-config.js"></script>
+  <script>
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.database();
+
+    // Check localStorage for previous votes
+    if (localStorage.getItem('sch-poll-q1')) {
+      disableQ1(localStorage.getItem('sch-poll-q1'));
+    }
+    if (localStorage.getItem('sch-poll-q2')) {
+      disableQ2();
+    }
+
+    // Allow Enter key to submit Q2
+    document.getElementById('q2-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') voteQ2();
+    });
+
+    function voteQ1(btn) {
+      if (localStorage.getItem('sch-poll-q1')) return;
+      var value = btn.getAttribute('data-value');
+      db.ref('polls/q1').push(value);
+      localStorage.setItem('sch-poll-q1', value);
+      disableQ1(value);
+    }
+
+    function disableQ1(selectedValue) {
+      var btns = document.querySelectorAll('#q1-options .option-btn');
+      btns.forEach(function(b) {
+        b.disabled = true;
+        if (b.getAttribute('data-value') === selectedValue) {
+          b.classList.add('selected');
+        }
+      });
+      document.getElementById('q1-done').classList.add('show');
+    }
+
+    function voteQ2() {
+      if (localStorage.getItem('sch-poll-q2')) return;
+      var input = document.getElementById('q2-input');
+      var word = input.value.trim();
+      if (!word) return;
+      db.ref('polls/q2').push(word);
+      localStorage.setItem('sch-poll-q2', word);
+      disableQ2();
+    }
+
+    function disableQ2() {
+      document.getElementById('q2-input').disabled = true;
+      document.getElementById('q2-submit').disabled = true;
+      document.getElementById('q2-done').classList.add('show');
+    }
+  </script>
+</body>
+</html>
