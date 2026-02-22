@@ -899,11 +899,11 @@ section.req-entrance.present .req-card:nth-child(3) {
 }
 
 section.req-entrance.present .req-fill-arc {
-  animation: arcFill 1.5s ease-out 1.8s forwards;
+  animation: arcFill 1.5s ease-out 0.2s forwards;
 }
 
 section.req-entrance.present .req-end-indicator {
-  animation: indicatorOrbit 1.5s ease-out 1.8s forwards;
+  animation: indicatorOrbit 1.5s ease-out 0.2s forwards;
 }
 
 /* ── Channel Entrance Animation ── */
@@ -1010,3 +1010,121 @@ section.bento-entrance.present .bento-more {
 .sparkle {
   animation: sparkle 1.8s ease-in-out infinite;
 }
+
+/* ── Icebreaking QR Code (on title slide) ── */
+.icebreak-qr-wrap {
+  top: 50%;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.icebreak-qr {
+  width: 400px;
+  height: 400px;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.icebreak-qr-link {
+  color: var(--sch-blue);
+  font-family: 'Fira Mono', monospace;
+  font-size: 34px;
+  font-weight: 400;
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* ── Icebreaking Question Slides ── */
+.icebreak-slide {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.icebreak-split {
+  width: 1922px;
+  height: 1080px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  display: flex;
+  gap: 0;
+  background: #ffffff;
+}
+
+.icebreak-left {
+  width: 961px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.icebreak-question {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(50% + 2px);
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.icebreak-question-top {
+  bottom: auto;
+  top: calc(50% - 164px);
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding-left: 60px;
+}
+
+.icebreak-question-bottom {
+  bottom: auto;
+  top: calc(50% - 4px);
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-left: 60px;
+}
+
+.icebreak-bottom-text {
+  font-family: 'Fira Mono', monospace;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--sch-blue);
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.icebreak-wrtn-logo {
+  height: 42px;
+  display: inline-block;
+  vertical-align: middle;
+  filter: brightness(0) saturate(100%) invert(27%) sepia(50%) saturate(1200%) hue-rotate(196deg) brightness(90%) contrast(90%);
+}
+
+.icebreak-right {
+  width: 961px;
+  height: 1080px;
+  position: relative;
+  background: #000000;
+  flex-shrink: 0;
+}
+
+.icebreak-right iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  border: none;
+  display: block;
+}
+

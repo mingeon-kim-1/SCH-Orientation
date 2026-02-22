@@ -909,6 +909,71 @@
         </div>
       </section>
 
+      <!-- ICEBREAKING title slide -->
+      <section class="title-slide" data-background="none" data-transition="fade">
+        <div class="title-split">
+          <div class="title-top"></div>
+          <div class="title-bottom"></div>
+          <div class="title-sch" style="bottom: calc(50% + 2px);">
+            <svg viewBox="0 0 1200 180" class="title-text-kr" style="width: 1000px;">
+              <text x="600" y="180" text-anchor="middle"
+                    font-family="Fira Mono, monospace" font-weight="700"
+                    font-size="180" fill="white">ICEBREAKING</text>
+            </svg>
+          </div>
+          <div class="title-subtitle icebreak-qr-wrap">
+            <img src="assets/slido-qr.svg" alt="Slido QR" class="icebreak-qr">
+            <p class="icebreak-qr-link">app.sli.do/event/vE77NJU8nzrJytm7ezMppG</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ICEBREAKING Q1 -->
+      <section class="icebreak-slide icebreak-entrance" data-background="none" data-transition="fade">
+        <div class="icebreak-split">
+          <div class="icebreak-left">
+            <div class="title-top"></div>
+            <div class="title-bottom"></div>
+            <div class="icebreak-question icebreak-question-top">
+              <svg viewBox="0 0 800 180" style="width: 700px; overflow: visible;">
+                <text x="0" y="180" text-anchor="start"
+                      font-family="Fira Mono, monospace" font-weight="700"
+                      font-size="140" fill="white">나는</text>
+              </svg>
+            </div>
+            <div class="icebreak-question icebreak-question-bottom">
+              <span class="icebreak-bottom-text"><img src="assets/Wrtn.svg" alt="Wrtn" class="icebreak-wrtn-logo">에 대해서 들어본 적이 있다</span>
+            </div>
+          </div>
+          <div class="icebreak-right">
+            <iframe src="https://app.sli.do/event/vE77NJU8nzrJytm7ezMppG/embed/polls/live" allow="clipboard-write"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- ICEBREAKING Q2 -->
+      <section class="icebreak-slide icebreak-entrance" data-background="none" data-transition="fade">
+        <div class="icebreak-split">
+          <div class="icebreak-left">
+            <div class="title-top"></div>
+            <div class="title-bottom"></div>
+            <div class="icebreak-question icebreak-question-top" style="top: calc(50% - 157px);">
+              <svg viewBox="0 0 800 180" style="width: 700px; overflow: visible;">
+                <text x="0" y="180" text-anchor="start"
+                      font-family="Fira Mono, monospace" font-weight="700"
+                      font-size="140" fill="white">"AI" 하면</text>
+              </svg>
+            </div>
+            <div class="icebreak-question icebreak-question-bottom">
+              <span class="icebreak-bottom-text" style="font-size: 80px;">처음 떠오르는 단어는?</span>
+            </div>
+          </div>
+          <div class="icebreak-right">
+            <iframe src="https://app.sli.do/event/vE77NJU8nzrJytm7ezMppG/embed/polls/live" allow="clipboard-write"></iframe>
+          </div>
+        </div>
+      </section>
+
     </div>
   </div>
 
@@ -940,10 +1005,10 @@
       setTimeout(function() {
         if (arcEl) arcEl.style.strokeDashoffset = '0';
         if (indEl) indEl.style.transform = 'rotate(288deg)';
-      }, 3400); // 1800ms delay + 1500ms duration + buffer
+      }, 1800); // 200ms delay + 1500ms duration + buffer
       // Counter animation
       var start = null;
-      var delay = 1800;
+      var delay = 200;
       var duration = 1500;
       function step(ts) {
         if (!start) start = ts;
