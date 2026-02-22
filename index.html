@@ -993,8 +993,7 @@
           </div>
           <div class="icebreak-right">
             <div class="poll-results" id="q2-results">
-              <div class="word-cloud" id="q2-cloud"></div>
-              <div class="poll-total">총 <span id="q2-total">0</span>명 참여</div>
+              <div class="live-chat" id="q2-chat"></div>
             </div>
           </div>
         </div>
@@ -1058,6 +1057,7 @@
     function resetPolls() {
       if (!confirm('투표 데이터를 모두 삭제할까요?')) return;
       firebase.database().ref('polls').remove();
+      firebase.database().ref('activeQuestion').remove();
       localStorage.removeItem('sch-poll-q1');
       localStorage.removeItem('sch-poll-q2');
     }
@@ -1065,6 +1065,22 @@
     // ── Live Poll Rendering ──
     firebase.initializeApp(firebaseConfig);
     var pollDb = firebase.database();
+
+    // Set active question based on current slide
+    function updateActiveQuestion() {
+      var slide = Reveal.getCurrentSlide();
+      var q1Slide = document.getElementById('q1-results');
+      var q2Slide = document.getElementById('q2-results');
+      if (q1Slide && slide.contains(q1Slide)) {
+        pollDb.ref('activeQuestion').set('q1');
+      } else if (q2Slide && slide.contains(q2Slide)) {
+        pollDb.ref('activeQuestion').set('q2');
+      } else {
+        pollDb.ref('activeQuestion').set(null);
+      }
+    }
+    Reveal.on('slidechanged', updateActiveQuestion);
+    Reveal.on('ready', updateActiveQuestion);
 
     // Q1: Bar chart
     pollDb.ref('polls/q1').on('value', function(snap) {
@@ -1085,40 +1101,72 @@
       document.getElementById('q1-total').textContent = total;
     });
 
-    // Q2: Word cloud
+    // Q2: Spiral chat bubbles
+    var q2PrevCount = 0;
     pollDb.ref('polls/q2').on('value', function(snap) {
       var data = snap.val() || {};
-      var words = Object.values(data);
-      var total = words.length;
-      document.getElementById('q2-total').textContent = total;
+      var messages = Object.values(data);
+      var chat = document.getElementById('q2-chat');
+      var cw = chat.offsetWidth;
+      var ch = chat.offsetHeight;
+      var cx = cw / 2;
+      var cy = ch / 2;
+      var margin = 50;
+      var placed = []; // array of {x, y, w, h} rects
 
-      // Count frequency
-      var freq = {};
-      words.forEach(function(w) {
-        var key = w.trim().toLowerCase();
-        if (!key) return;
-        freq[key] = (freq[key] || 0) + 1;
+      chat.innerHTML = '';
+      messages.forEach(function(msg, i) {
+        var bubble = document.createElement('div');
+        bubble.className = 'chat-bubble';
+        bubble.textContent = msg;
+        bubble.style.visibility = 'hidden';
+        chat.appendChild(bubble);
+
+        // Measure
+        var bw = bubble.offsetWidth;
+        var bh = bubble.offsetHeight;
+
+        // Spiral placement: find a position that doesn't overlap
+        var angle = i * 0.8;
+        var radius = 0;
+        var step = 8;
+        var px, py, ok;
+        for (var attempt = 0; attempt < 300; attempt++) {
+          px = cx + radius * Math.cos(angle) - bw / 2;
+          py = cy + radius * Math.sin(angle) - bh / 2;
+
+          // Check bounds
+          if (px < margin || py < margin || px + bw > cw - margin || py + bh > ch - margin) {
+            radius += step;
+            angle += 0.3;
+            continue;
+          }
+
+          // Check overlap with placed bubbles (with gap)
+          ok = true;
+          var gap = 12;
+          for (var j = 0; j < placed.length; j++) {
+            var p = placed[j];
+            if (px < p.x + p.w + gap && px + bw + gap > p.x &&
+                py < p.y + p.h + gap && py + bh + gap > p.y) {
+              ok = false;
+              break;
+            }
+          }
+
+          if (ok) break;
+          radius += step;
+          angle += 0.3;
+        }
+
+        placed.push({ x: px, y: py, w: bw, h: bh });
+        bubble.style.left = px + 'px';
+        bubble.style.top = py + 'px';
+        bubble.style.visibility = 'visible';
+        if (i >= q2PrevCount) bubble.classList.add('chat-new');
       });
 
-      // Sort by frequency, take top 50
-      var sorted = Object.entries(freq).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 50);
-      var maxCount = sorted.length ? sorted[0][1] : 1;
-
-      var cloud = document.getElementById('q2-cloud');
-      cloud.innerHTML = '';
-      sorted.forEach(function(entry) {
-        var word = entry[0];
-        var count = entry[1];
-        var span = document.createElement('span');
-        span.className = 'word-cloud-word';
-        span.textContent = word;
-        // Scale font size: min 20px, max 72px
-        var scale = count / maxCount;
-        var fontSize = Math.round(20 + scale * 52);
-        span.style.fontSize = fontSize + 'px';
-        span.style.opacity = 0.5 + scale * 0.5;
-        cloud.appendChild(span);
-      });
+      q2PrevCount = messages.length;
     });
   </script>
 </body>

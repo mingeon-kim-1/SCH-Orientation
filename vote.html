@@ -191,6 +191,19 @@
       cursor: not-allowed;
     }
 
+    .hidden {
+      display: none !important;
+    }
+
+    .waiting-msg {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--sch-blue);
+      opacity: 0.4;
+    }
+
     .done-msg {
       display: none;
       text-align: center;
@@ -222,8 +235,10 @@
   </div>
 
   <main>
+    <div class="waiting-msg" id="waiting-msg">잠시만 기다려주세요...</div>
+
     <!-- Q1 -->
-    <div class="question-card" id="q1-card">
+    <div class="question-card hidden" id="q1-card">
       <div class="question-label">Question 1</div>
       <div class="question-text">나는 <img src="assets/Wrtn.svg" alt="Wrtn">에 대해서 들어본 적이 있다</div>
       <div class="options" id="q1-options">
@@ -234,7 +249,7 @@
     </div>
 
     <!-- Q2 -->
-    <div class="question-card" id="q2-card">
+    <div class="question-card hidden" id="q2-card">
       <div class="question-label">Question 2</div>
       <div class="question-text">"AI" 하면 처음 떠오르는 단어는?</div>
       <div class="text-input-wrap" id="q2-form">
@@ -255,11 +270,17 @@
     firebase.initializeApp(firebaseConfig);
     var db = firebase.database();
 
-    // localStorage duplicate prevention disabled for testing
+    // Listen for active question from presenter
+    db.ref('activeQuestion').on('value', function(snap) {
+      var active = snap.val();
+      document.getElementById('waiting-msg').classList.toggle('hidden', !!active);
+      document.getElementById('q1-card').classList.toggle('hidden', active !== 'q1');
+      document.getElementById('q2-card').classList.toggle('hidden', active !== 'q2');
+    });
 
-    // Allow Enter key to submit Q2
+    // Allow Enter key to submit Q2 (skip if Korean IME is composing)
     document.getElementById('q2-input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') voteQ2();
+      if (e.key === 'Enter' && !e.isComposing) voteQ2();
     });
 
     function voteQ1(btn) {
