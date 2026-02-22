@@ -104,9 +104,9 @@
                   <!-- Sparkles -->
                   <path class="sparkle" d="M 45 25 Q 50 25 50 20 Q 50 25 55 25 Q 50 25 50 30 Q 50 25 45 25 Z" fill="#a2b8da" style="transform-origin: 50px 25px; animation-delay: 0.4s;"/>
                   <path class="sparkle" d="M 150 35 Q 155 35 155 30 Q 155 35 160 35 Q 155 35 155 40 Q 155 35 150 35 Z" fill="#93aace" style="transform-origin: 155px 35px; animation-delay: 1s;"/>
-                  <circle cx="25" cy="35" r="2.5" fill="#93aace"/>
-                  <circle cx="180" cy="165" r="3.5" fill="#a2b8da" stroke="#26549c" stroke-width="1.5"/>
-                  <circle cx="168" cy="175" r="2" fill="#7b95bd"/>
+                  <circle class="dot-glow" cx="25" cy="35" r="2.5" fill="#26549c" style="animation-delay: 0.2s;"/>
+                  <circle class="dot-glow" cx="180" cy="165" r="3.5" fill="#26549c" style="animation-delay: 0.8s;"/>
+                  <circle class="dot-glow" cx="168" cy="175" r="2" fill="#26549c" style="animation-delay: 1.4s;"/>
                 </svg>
                 <span class="agenda-text"><span class="agenda-num">01</span> 커리큘럼 소개</span>
               </div>
@@ -192,11 +192,31 @@
                   <line x1="126" y1="70" x2="151" y2="49" stroke="#b0c6e6" stroke-width="3" stroke-dasharray="6 4" stroke-linecap="round" />
                   <line x1="74" y1="130" x2="49" y2="151" stroke="#b0c6e6" stroke-width="3" stroke-dasharray="6 4" stroke-linecap="round" />
                   <line x1="126" y1="130" x2="151" y2="151" stroke="#b0c6e6" stroke-width="3" stroke-dasharray="6 4" stroke-linecap="round" />
-                  <!-- Corner node dots -->
-                  <circle cx="61" cy="59" r="3.5" fill="#5578ad" stroke="#26549c" stroke-width="1.5" />
-                  <circle cx="139" cy="59" r="3.5" fill="#7b95bd" stroke="#26549c" stroke-width="1.5" />
-                  <circle cx="61" cy="141" r="3.5" fill="#a2b8da" stroke="#26549c" stroke-width="1.5" />
-                  <circle cx="139" cy="141" r="3.5" fill="#4a73b3" stroke="#26549c" stroke-width="1.5" />
+                  <!-- Traveling dots: phone → corners (along dashed lines) -->
+                  <!-- TL → Mail (#5578ad) -->
+                  <circle r="3.5" fill="#5578ad" opacity="0">
+                    <animate attributeName="cx" values="74;49;49" keyTimes="0;0.4;1" dur="3s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0 0 1 1" />
+                    <animate attributeName="cy" values="70;49;49" keyTimes="0;0.4;1" dur="3s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0 0 1 1" />
+                    <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.05;0.33;0.4;1" dur="3s" repeatCount="indefinite" />
+                  </circle>
+                  <!-- TR → Chat (#7b95bd) -->
+                  <circle r="3.5" fill="#7b95bd" opacity="0">
+                    <animate attributeName="cx" values="126;151;151" keyTimes="0;0.4;1" dur="3s" begin="0.7s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0 0 1 1" />
+                    <animate attributeName="cy" values="70;49;49" keyTimes="0;0.4;1" dur="3s" begin="0.7s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0 0 1 1" />
+                    <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.05;0.33;0.4;1" dur="3s" begin="0.7s" repeatCount="indefinite" />
+                  </circle>
+                  <!-- BL → Speaker (#a2b8da) -->
+                  <circle r="3.5" fill="#a2b8da" opacity="0">
+                    <animate attributeName="cx" values="74;49;49" keyTimes="0;0.4;1" dur="3s" begin="1.4s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0 0 1 1" />
+                    <animate attributeName="cy" values="130;151;151" keyTimes="0;0.4;1" dur="3s" begin="1.4s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0 0 1 1" />
+                    <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.05;0.33;0.4;1" dur="3s" begin="1.4s" repeatCount="indefinite" />
+                  </circle>
+                  <!-- BR → Video (#4a73b3) -->
+                  <circle r="3.5" fill="#4a73b3" opacity="0">
+                    <animate attributeName="cx" values="126;151;151" keyTimes="0;0.4;1" dur="3s" begin="2.1s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0 0 1 1" />
+                    <animate attributeName="cy" values="130;151;151" keyTimes="0;0.4;1" dur="3s" begin="2.1s" repeatCount="indefinite" calcMode="spline" keySplines="0.42 0 0.58 1; 0 0 1 1" />
+                    <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.05;0.33;0.4;1" dur="3s" begin="2.1s" repeatCount="indefinite" />
+                  </circle>
                   <!-- Signal arcs -->
                   <path class="signal-arc" style="animation-delay: 0s;" d="M 94 42 A 8 8 0 0 1 106 42" fill="none" stroke="#26549c" stroke-width="2.5" stroke-linecap="round" />
                   <path class="signal-arc" style="animation-delay: 0.3s;" d="M 90 36 A 14 14 0 0 1 110 36" fill="none" stroke="#26549c" stroke-width="2.5" stroke-linecap="round" />
@@ -277,9 +297,9 @@
                   <line x1="20" y1="80" x2="35" y2="85" stroke="#93aace" stroke-width="3" stroke-linecap="round" />
                   <line x1="180" y1="80" x2="165" y2="85" stroke="#5578ad" stroke-width="3" stroke-linecap="round" />
                   <!-- Decorative dots -->
-                  <circle cx="25" cy="60" r="3" fill="#5578ad" stroke="#26549c" stroke-width="1.5" />
-                  <circle cx="170" cy="70" r="3" fill="#7b95bd" stroke="#26549c" stroke-width="1.5" />
-                  <circle cx="45" cy="155" r="3" fill="#4a73b3" stroke="#26549c" stroke-width="1.5" />
+                  <circle class="dot-glow" cx="25" cy="60" r="3" fill="#26549c" style="animation-delay: 0.3s;" />
+                  <circle class="dot-glow" cx="170" cy="70" r="3" fill="#26549c" style="animation-delay: 0.9s;" />
+                  <circle class="dot-glow" cx="45" cy="155" r="3" fill="#26549c" style="animation-delay: 1.5s;" />
                 </svg>
                 <span class="agenda-text"><span class="agenda-num">05</span> 마무리</span>
               </div>
@@ -571,10 +591,10 @@
                       <animateTransform attributeName="transform" type="scale" values="1;0.3;1" dur="2.4s" repeatCount="indefinite" additive="sum" />
                       <animate attributeName="opacity" values="1;0.3;1" dur="2.4s" repeatCount="indefinite" />
                     </g>
-                    <!-- Decorative dots -->
-                    <circle cx="140" cy="30" r="3" fill="#c5d0e0" stroke="#26549c" stroke-width="1.5" />
-                    <circle cx="45" cy="70" r="3" fill="#ffffff" stroke="#ffffff" stroke-width="1.5" />
-                    <circle cx="100" cy="22" r="4" fill="#ffffff" stroke="#26549c" stroke-width="2" />
+                    <!-- Decorative dots (glow) -->
+                    <circle class="dot-glow" cx="140" cy="30" r="3" fill="#c5d0e0" style="animation-delay: 0.2s;" />
+                    <circle class="dot-glow" cx="45" cy="70" r="3" fill="#ffffff" style="animation-delay: 0.9s;" />
+                    <circle class="dot-glow" cx="100" cy="22" r="4" fill="#ffffff" style="animation-delay: 1.5s;" />
                   </svg>
                 </div>
                 <ul class="req-list">
