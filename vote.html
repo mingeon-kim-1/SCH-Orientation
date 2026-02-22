@@ -430,7 +430,10 @@
 
     function voteQ1(btn) {
       var value = btn.getAttribute('data-value');
-      db.ref('polls/q1').push(value);
+      db.ref('polls/q1/' + getDeviceId()).set(value);
+      var btns = document.querySelectorAll('#q1-options .option-btn');
+      btns.forEach(function(b) { b.classList.remove('selected'); });
+      btn.classList.add('selected');
     }
 
     function voteQ2() {
@@ -480,12 +483,18 @@
 
     function voteQ4(btn) {
       var value = btn.getAttribute('data-value');
-      db.ref('polls/q4').push(value);
+      db.ref('polls/q4/' + getDeviceId()).set(value);
+      var btns = document.querySelectorAll('#q4-options .option-btn');
+      btns.forEach(function(b) { b.classList.remove('selected'); });
+      btn.classList.add('selected');
     }
 
     function voteQ5(btn) {
       var value = btn.getAttribute('data-value');
-      db.ref('polls/q5').push(value);
+      db.ref('polls/q5/' + getDeviceId()).set(value);
+      var btns = document.querySelectorAll('#q5-options .option-btn');
+      btns.forEach(function(b) { b.classList.remove('selected'); });
+      btn.classList.add('selected');
     }
 
     function voteQ6() {
