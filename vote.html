@@ -195,6 +195,78 @@
       display: none !important;
     }
 
+    /* ── Q3 Spectrum Slider ── */
+    .spectrum-slider-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .spectrum-endpoints {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .spectrum-endpoint {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .spectrum-endpoint img {
+      width: 48px;
+      height: 48px;
+    }
+
+    .spectrum-endpoint-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--sch-blue);
+      opacity: 0.6;
+    }
+
+    .spectrum-range {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 12px;
+      border-radius: 6px;
+      background: linear-gradient(to right, #dfe7f2, #7b95bd, #26549c);
+      outline: none;
+    }
+
+    .spectrum-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--sch-blue);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(38, 84, 156, 0.2);
+    }
+
+    .spectrum-range::-moz-range-thumb {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--sch-blue);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(38, 84, 156, 0.2);
+    }
+
+    .spectrum-value {
+      text-align: center;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--sch-blue);
+      line-height: 1;
+    }
+
     .waiting-msg {
       text-align: center;
       padding: 40px 20px;
@@ -258,6 +330,71 @@
       </div>
       <div class="done-msg" id="q2-done">투표 완료!</div>
     </div>
+
+    <!-- Q3 (spectrum slider) -->
+    <div class="question-card hidden" id="q3-card">
+      <div class="question-label">Question 3</div>
+      <div class="question-text">AI에 대한 나의 기대감은?</div>
+      <div class="spectrum-slider-wrap" id="q3-slider-wrap">
+        <div class="spectrum-endpoints">
+          <div class="spectrum-endpoint">
+            <img src="assets/emoji-worried.svg" alt="걱정">
+            <span class="spectrum-endpoint-label">걱정돼요</span>
+          </div>
+          <div class="spectrum-endpoint">
+            <img src="assets/emoji-excited.svg" alt="기대">
+            <span class="spectrum-endpoint-label">기대돼요!</span>
+          </div>
+        </div>
+        <input type="range" class="spectrum-range" id="q3-range" min="0" max="100" value="50">
+        <div class="spectrum-value" id="q3-value">50</div>
+      </div>
+      <div class="done-msg" id="q3-done">제출 완료! 언제든 바꿀 수 있어요</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-card hidden" id="q4-card">
+      <div class="question-label">Question 4</div>
+      <div class="question-text">나는 코딩을 해본 적이 있다</div>
+      <div class="options" id="q4-options">
+        <button class="option-btn" data-value="option1" onclick="voteQ4(this)">있다</button>
+        <button class="option-btn" data-value="option2" onclick="voteQ4(this)">없다</button>
+      </div>
+      <div class="done-msg" id="q4-done">투표 완료!</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-card hidden" id="q5-card">
+      <div class="question-label">Question 5</div>
+      <div class="question-text">나는 이번 주에 AI를 사용했다</div>
+      <div class="options" id="q5-options">
+        <button class="option-btn" data-value="option1" onclick="voteQ5(this)">네!</button>
+        <button class="option-btn" data-value="option2" onclick="voteQ5(this)">아니요</button>
+      </div>
+      <div class="done-msg" id="q5-done">투표 완료!</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-card hidden" id="q6-card">
+      <div class="question-label">Question 6</div>
+      <div class="question-text">요즘 가장 많이 쓰는 앱은?</div>
+      <div class="text-input-wrap" id="q6-form">
+        <input type="text" class="text-input" id="q6-input" placeholder="앱 이름을 입력하세요" maxlength="20">
+        <button class="submit-btn" id="q6-submit" onclick="voteQ6()">전송</button>
+      </div>
+      <div class="done-msg" id="q6-done">투표 완료!</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-card hidden" id="q7-card">
+      <div class="question-label">Question 7</div>
+      <div class="question-text">이번 부트캠프에서 만들고 싶은 것은?</div>
+      <div class="text-input-wrap" id="q7-form">
+        <input type="text" class="text-input" id="q7-input" placeholder="자유롭게 입력하세요" maxlength="20">
+        <button class="submit-btn" id="q7-submit" onclick="voteQ7()">전송</button>
+      </div>
+      <div class="done-msg" id="q7-done">투표 완료!</div>
+    </div>
   </main>
 
   <div class="footer">순천향대학교 &times; Wrtn</div>
@@ -271,16 +408,24 @@
     var db = firebase.database();
 
     // Listen for active question from presenter
+    var allQs = ['q1','q2','q3','q4','q5','q6','q7'];
     db.ref('activeQuestion').on('value', function(snap) {
       var active = snap.val();
       document.getElementById('waiting-msg').classList.toggle('hidden', !!active);
-      document.getElementById('q1-card').classList.toggle('hidden', active !== 'q1');
-      document.getElementById('q2-card').classList.toggle('hidden', active !== 'q2');
+      allQs.forEach(function(q) {
+        document.getElementById(q + '-card').classList.toggle('hidden', active !== q);
+      });
     });
 
-    // Allow Enter key to submit Q2 (skip if Korean IME is composing)
-    document.getElementById('q2-input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.isComposing) voteQ2();
+    // Allow Enter key to submit text inputs (skip if Korean IME is composing)
+    ['q2-input','q6-input','q7-input'].forEach(function(id) {
+      document.getElementById(id).addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.isComposing) {
+          if (id === 'q2-input') voteQ2();
+          else if (id === 'q6-input') voteQ6();
+          else if (id === 'q7-input') voteQ7();
+        }
+      });
     });
 
     function voteQ1(btn) {
@@ -293,6 +438,70 @@
       var word = input.value.trim();
       if (!word) return;
       db.ref('polls/q2').push(word);
+      input.value = '';
+      input.focus();
+    }
+
+    // Q3: Spectrum slider with device ID
+    function getDeviceId() {
+      var id = localStorage.getItem('sch-device-id');
+      if (!id) {
+        id = 'dev-' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+        localStorage.setItem('sch-device-id', id);
+      }
+      return id;
+    }
+
+    (function() {
+      var slider = document.getElementById('q3-range');
+      var valueDisplay = document.getElementById('q3-value');
+      var doneMsg = document.getElementById('q3-done');
+      var deviceId = getDeviceId();
+      var debounceTimer = null;
+
+      function sendQ3Value(val) {
+        db.ref('polls/q3/' + deviceId).set(Number(val));
+        doneMsg.classList.add('show');
+      }
+
+      slider.addEventListener('input', function() {
+        valueDisplay.textContent = slider.value;
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(function() {
+          sendQ3Value(slider.value);
+        }, 300);
+      });
+
+      slider.addEventListener('change', function() {
+        clearTimeout(debounceTimer);
+        sendQ3Value(slider.value);
+      });
+    })();
+
+    function voteQ4(btn) {
+      var value = btn.getAttribute('data-value');
+      db.ref('polls/q4').push(value);
+    }
+
+    function voteQ5(btn) {
+      var value = btn.getAttribute('data-value');
+      db.ref('polls/q5').push(value);
+    }
+
+    function voteQ6() {
+      var input = document.getElementById('q6-input');
+      var word = input.value.trim();
+      if (!word) return;
+      db.ref('polls/q6').push(word);
+      input.value = '';
+      input.focus();
+    }
+
+    function voteQ7() {
+      var input = document.getElementById('q7-input');
+      var word = input.value.trim();
+      if (!word) return;
+      db.ref('polls/q7').push(word);
       input.value = '';
       input.focus();
     }

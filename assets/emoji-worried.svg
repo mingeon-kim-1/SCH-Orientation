@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Face circle -->
+  <circle cx="100" cy="100" r="90" fill="#dfe7f2" stroke="#26549c" stroke-width="5"/>
+  <!-- Left eyebrow (downturned) -->
+  <path d="M 55 65 Q 70 55 85 68" fill="none" stroke="#26549c" stroke-width="5" stroke-linecap="round"/>
+  <!-- Right eyebrow (downturned) -->
+  <path d="M 115 68 Q 130 55 145 65" fill="none" stroke="#26549c" stroke-width="5" stroke-linecap="round"/>
+  <!-- Left eye -->
+  <circle cx="72" cy="90" r="8" fill="#26549c"/>
+  <!-- Right eye -->
+  <circle cx="128" cy="90" r="8" fill="#26549c"/>
+  <!-- Wavy mouth -->
+  <path d="M 65 140 Q 80 130 100 140 Q 120 150 135 140" fill="none" stroke="#26549c" stroke-width="5" stroke-linecap="round"/>
+  <!-- Sweat drop -->
+  <path d="M 155 55 Q 160 40 165 55 Q 165 65 155 65 Q 150 65 155 55 Z" fill="#7b95bd" stroke="#5578ad" stroke-width="2"/>
+</svg>

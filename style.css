@@ -1220,22 +1220,146 @@ section.bento-entrance.present .bento-more {
 .chat-bubble {
   position: absolute;
   font-family: 'Fira Mono', monospace;
-  font-size: 28px;
-  font-weight: 400;
+  font-weight: 700;
   color: var(--sch-blue);
   background: #dfe7f2;
-  padding: 14px 22px;
+  padding: 10px 18px;
   border-radius: 20px;
   white-space: nowrap;
   line-height: 1.3;
+  transition: font-size 0.6s ease, left 0.6s ease, top 0.6s ease, padding 0.6s ease;
 }
 
 .chat-bubble.chat-new {
   animation: chatPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* ── Q3 Spectrum Visualization (presenter) ── */
+.spectrum-viz {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 100px 80px;
+  box-sizing: border-box;
+}
+
+.spectrum-track {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.spectrum-track-bar {
+  width: 100%;
+  height: 32px;
+  border-radius: 16px;
+  background: linear-gradient(to right, #dfe7f2, #7b95bd, #26549c);
+  flex-shrink: 0;
+}
+
+.spectrum-glow-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: 16px;
+  opacity: 0.5;
+}
+
+.spectrum-dots-layer {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 40px);
+  pointer-events: none;
+}
+
+.spectrum-dot {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #26549c;
+  opacity: 0.75;
+  transition: left 0.6s ease, bottom 0.6s ease;
+}
+
+.spectrum-dot-new {
+  animation: spectrumDotPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes spectrumDotPop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+.spectrum-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.spectrum-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.spectrum-label img {
+  width: 80px;
+  height: 80px;
+}
+
+.spectrum-label-text {
+  font-family: 'Fira Mono', monospace;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--sch-blue);
+}
+
+.spectrum-avg-marker {
+  position: absolute;
+  bottom: 0;
+  width: 3px;
+  height: 100%;
+  border-left: 3px dashed #26549c;
+  opacity: 0.4;
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.spectrum-stats {
+  font-family: 'Fira Mono', monospace;
+  font-size: 22px;
+  color: var(--sch-blue);
+  opacity: 0.5;
+  margin-top: 16px;
+  text-align: center;
+}
+
 @keyframes chatPopIn {
   from { opacity: 0; transform: scale(0.5); }
   to { opacity: 1; transform: scale(1); }
+}
+
+.chat-bubble.chat-voted {
+  animation: bubbleVoted 0.5s ease-out;
+}
+
+@keyframes bubbleVoted {
+  0%   { opacity: 0.3; }
+  100% { opacity: 1; }
 }
 
