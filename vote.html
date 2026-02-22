@@ -255,13 +255,7 @@
     firebase.initializeApp(firebaseConfig);
     var db = firebase.database();
 
-    // Check localStorage for previous votes
-    if (localStorage.getItem('sch-poll-q1')) {
-      disableQ1(localStorage.getItem('sch-poll-q1'));
-    }
-    if (localStorage.getItem('sch-poll-q2')) {
-      disableQ2();
-    }
+    // localStorage duplicate prevention disabled for testing
 
     // Allow Enter key to submit Q2
     document.getElementById('q2-input').addEventListener('keydown', function(e) {
@@ -269,38 +263,17 @@
     });
 
     function voteQ1(btn) {
-      if (localStorage.getItem('sch-poll-q1')) return;
       var value = btn.getAttribute('data-value');
       db.ref('polls/q1').push(value);
-      localStorage.setItem('sch-poll-q1', value);
-      disableQ1(value);
-    }
-
-    function disableQ1(selectedValue) {
-      var btns = document.querySelectorAll('#q1-options .option-btn');
-      btns.forEach(function(b) {
-        b.disabled = true;
-        if (b.getAttribute('data-value') === selectedValue) {
-          b.classList.add('selected');
-        }
-      });
-      document.getElementById('q1-done').classList.add('show');
     }
 
     function voteQ2() {
-      if (localStorage.getItem('sch-poll-q2')) return;
       var input = document.getElementById('q2-input');
       var word = input.value.trim();
       if (!word) return;
       db.ref('polls/q2').push(word);
-      localStorage.setItem('sch-poll-q2', word);
-      disableQ2();
-    }
-
-    function disableQ2() {
-      document.getElementById('q2-input').disabled = true;
-      document.getElementById('q2-submit').disabled = true;
-      document.getElementById('q2-done').classList.add('show');
+      input.value = '';
+      input.focus();
     }
   </script>
 </body>

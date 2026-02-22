@@ -925,6 +925,7 @@
             <img src="assets/slido-qr.svg" alt="Slido QR" class="icebreak-qr">
             <p class="icebreak-qr-link">sch-orientation.vercel.app/vote.html</p>
           </div>
+          <button onclick="resetPolls()" style="position:absolute;bottom:20px;left:20px;z-index:10;padding:8px 16px;font-size:14px;font-family:'Fira Mono',monospace;background:#e53935;color:#fff;border:none;border-radius:8px;cursor:pointer;opacity:0.6;">Reset Polls</button>
         </div>
       </section>
 
@@ -947,19 +948,25 @@
           </div>
           <div class="icebreak-right">
             <div class="poll-results" id="q1-results">
-              <div class="poll-bar">
-                <div class="poll-bar-label">들어본 적 있죠!</div>
-                <div class="poll-bar-track">
-                  <div class="poll-bar-fill" id="q1-bar1"></div>
+              <div class="poll-chart-row">
+                <div class="poll-chart-col">
+                  <div class="poll-chart-bar poll-chart-green">
+                    <div class="poll-chart-empty"></div>
+                    <div class="poll-chart-fill" id="q1-bar1"></div>
+                    <span class="poll-chart-pct" id="q1-pct1">0%</span>
+                  </div>
+                  <div class="poll-chart-label">들어본 적 있죠!</div>
+                  <div class="poll-chart-count" id="q1-cnt1">0표</div>
                 </div>
-                <div class="poll-bar-stat"><span id="q1-pct1">0%</span><span class="poll-bar-count" id="q1-cnt1">0표</span></div>
-              </div>
-              <div class="poll-bar">
-                <div class="poll-bar-label">그게 뭔데요?</div>
-                <div class="poll-bar-track">
-                  <div class="poll-bar-fill" id="q1-bar2"></div>
+                <div class="poll-chart-col">
+                  <div class="poll-chart-bar poll-chart-red">
+                    <div class="poll-chart-empty"></div>
+                    <div class="poll-chart-fill" id="q1-bar2"></div>
+                    <span class="poll-chart-pct" id="q1-pct2">0%</span>
+                  </div>
+                  <div class="poll-chart-label">그게 뭔데요?</div>
+                  <div class="poll-chart-count" id="q1-cnt2">0표</div>
                 </div>
-                <div class="poll-bar-stat"><span id="q1-pct2">0%</span><span class="poll-bar-count" id="q1-cnt2">0표</span></div>
               </div>
               <div class="poll-total">총 <span id="q1-total">0</span>명 참여</div>
             </div>
@@ -1047,6 +1054,14 @@
       requestAnimationFrame(step);
     });
 
+    // ── Reset Polls ──
+    function resetPolls() {
+      if (!confirm('투표 데이터를 모두 삭제할까요?')) return;
+      firebase.database().ref('polls').remove();
+      localStorage.removeItem('sch-poll-q1');
+      localStorage.removeItem('sch-poll-q2');
+    }
+
     // ── Live Poll Rendering ──
     firebase.initializeApp(firebaseConfig);
     var pollDb = firebase.database();
@@ -1061,8 +1076,8 @@
       var pct1 = total ? Math.round(opt1 / total * 100) : 0;
       var pct2 = total ? Math.round(opt2 / total * 100) : 0;
 
-      document.getElementById('q1-bar1').style.width = pct1 + '%';
-      document.getElementById('q1-bar2').style.width = pct2 + '%';
+      document.getElementById('q1-bar1').style.height = pct1 + '%';
+      document.getElementById('q1-bar2').style.height = pct2 + '%';
       document.getElementById('q1-pct1').textContent = pct1 + '%';
       document.getElementById('q1-pct2').textContent = pct2 + '%';
       document.getElementById('q1-cnt1').textContent = opt1 + '표';
