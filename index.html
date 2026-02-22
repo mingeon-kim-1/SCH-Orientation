@@ -14,6 +14,118 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Passcode Gate -->
+  <div id="passcode-gate">
+    <div class="passcode-card">
+      <p class="passcode-title">Enter Code</p>
+      <input id="passcode-input" type="password" maxlength="4" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+      <button id="passcode-btn">확인</button>
+      <p id="passcode-error">잘못된 코드입니다</p>
+    </div>
+  </div>
+
+  <style>
+    #passcode-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #passcode-gate.hidden { display: none; }
+    #passcode-gate ~ .reveal { display: none; }
+    #passcode-gate.hidden ~ .reveal { display: block; }
+    .passcode-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .passcode-title {
+      font-family: 'Fira Mono', monospace;
+      font-size: 28px;
+      font-weight: 700;
+      color: #26549c;
+      margin: 0;
+    }
+    #passcode-input {
+      width: 200px;
+      padding: 14px;
+      font-family: 'Fira Mono', monospace;
+      font-size: 32px;
+      text-align: center;
+      letter-spacing: 12px;
+      border: 2px solid #c2d5ed;
+      border-radius: 12px;
+      outline: none;
+    }
+    #passcode-input:focus { border-color: #26549c; }
+    #passcode-btn {
+      padding: 12px 48px;
+      font-family: 'Fira Mono', monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      background: #26549c;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #passcode-btn:hover { opacity: 0.85; }
+    #passcode-error {
+      font-family: 'Fira Mono', monospace;
+      font-size: 16px;
+      color: #c0392b;
+      margin: 0;
+      visibility: hidden;
+    }
+    #passcode-error.visible { visibility: visible; }
+    @keyframes passcodeShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+    .passcode-shake { animation: passcodeShake 0.4s ease; }
+  </style>
+
+  <script>
+    (function() {
+      var CODE = '0621';
+      var gate = document.getElementById('passcode-gate');
+      var input = document.getElementById('passcode-input');
+      var btn = document.getElementById('passcode-btn');
+      var error = document.getElementById('passcode-error');
+
+      if (sessionStorage.getItem('sch-unlocked')) {
+        gate.classList.add('hidden');
+        return;
+      }
+
+      function attempt() {
+        if (input.value === CODE) {
+          sessionStorage.setItem('sch-unlocked', '1');
+          gate.classList.add('hidden');
+        } else {
+          error.classList.add('visible');
+          input.classList.remove('passcode-shake');
+          void input.offsetWidth;
+          input.classList.add('passcode-shake');
+          input.value = '';
+          input.focus();
+        }
+      }
+
+      btn.addEventListener('click', attempt);
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') attempt();
+      });
+      input.focus();
+    })();
+  </script>
+
   <div class="reveal">
     <div class="slides">
 
